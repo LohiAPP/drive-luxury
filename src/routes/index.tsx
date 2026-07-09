@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   Car, Users, Fuel, Snowflake, Cog, Phone, MapPin, Clock, Shield,
   Sparkles, BadgeCheck, MousePointer2, Star, ChevronDown, ArrowRight,
-  Plane, Route as RouteIcon, Briefcase, Mountain, Steering as SteeringIcon,
+  Plane, Route as RouteIcon, Briefcase, Mountain,
   MessageCircle, Menu, X, CheckCircle2, Gauge, HandCoins, Timer, Navigation,
 } from "lucide-react";
-// Note: some lucide icons imported above may not exist; we alias below where needed.
 
 import heroCar from "@/assets/hero-car.jpg";
 import interior from "@/assets/interior.jpg";
