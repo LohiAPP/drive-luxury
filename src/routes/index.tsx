@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useEffect, useRef, useState } from "react";
 import {
   Car, Users, Fuel, Snowflake, Cog, Phone, MapPin, Clock, Shield,
-  Sparkles, BadgeCheck, MousePointer2, Star, ChevronDown, ArrowRight,
+  Sparkles, BadgeCheck, MousePointer2, Star, ChevronDown, ChevronLeft, ChevronRight, ArrowRight,
   Plane, Route as RouteIcon, Briefcase, Mountain,
   MessageCircle, Menu, X, CheckCircle2, Gauge, HandCoins, Timer, Navigation,
 } from "lucide-react";
@@ -50,6 +50,14 @@ function Index() {
       <CTA />
       <Contact />
       <Footer />
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <a href={`tel:${PHONE}`} className="grid h-14 w-14 place-items-center rounded-full bg-[#132238] text-white shadow-lg shadow-black/40 ring-1 ring-white/20 transition-transform hover:scale-110">
+          <Phone className="h-6 w-6" />
+        </a>
+        <a href={`https://wa.me/919393093095`} target="_blank" rel="noreferrer" className="grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-transform hover:scale-110 overflow-hidden">
+          <img src="/whatsapp.png" alt="WhatsApp" className="h-10 w-10 object-contain" />
+        </a>
+      </div>
     </div>
   );
 }
@@ -111,8 +119,8 @@ function Navbar() {
           }`}
         >
           <a href="#home" className="group flex items-center gap-3">
-            <div className="relative grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15] shadow-lg shadow-[#d4af37]/25">
-              <span className="font-display text-lg font-bold text-[#0d1b2a]">B</span>
+            <div className="relative grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15] shadow-lg shadow-[#d4af37]/25 overflow-hidden">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
               <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/20" />
             </div>
             <div className="leading-tight">
@@ -141,7 +149,7 @@ function Navbar() {
             >
               <Phone className="h-4 w-4" /> Call Now
             </a>
-            <GoldButton href="#contact">Book Now</GoldButton>
+            <GoldButton href="https://wa.me/919393093095">Book Now</GoldButton>
           </div>
 
           <button
@@ -174,7 +182,7 @@ function Navbar() {
                 ))}
                 <div className="mt-2 flex gap-2">
                   <a href={`tel:${PHONE}`} className="flex-1 rounded-full border border-white/15 px-4 py-2 text-center text-sm">Call Now</a>
-                  <a href="#contact" className="flex-1 rounded-full bg-[#d4af37] px-4 py-2 text-center text-sm font-semibold text-[#0d1b2a]">Book</a>
+                  <a href="https://wa.me/919393093095" className="flex-1 rounded-full bg-[#d4af37] px-4 py-2 text-center text-sm font-semibold text-[#0d1b2a]">Book</a>
                 </div>
               </div>
             </motion.div>
@@ -232,7 +240,7 @@ function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1.25]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const headline = ["Premium", "Self", "Drive", "Cars", "&", "Car", "Rentals"];
+  const headline = ["Premium", "Self", "Drive", "Cars", "&", "Car", "Travels"];
 
   return (
     <section id="home" ref={ref} className="relative min-h-screen w-full overflow-hidden">
@@ -560,6 +568,42 @@ function ServiceCard({
 
 /* ---------------- Fleet ---------------- */
 function Fleet() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDown.current = true;
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grabbing";
+      scrollRef.current.style.scrollBehavior = "auto";
+      startX.current = e.pageX - scrollRef.current.offsetLeft;
+      scrollLeft.current = scrollRef.current.scrollLeft;
+    }
+  };
+  const handleMouseLeave = () => {
+    isDown.current = false;
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grab";
+      scrollRef.current.style.scrollBehavior = "smooth";
+    }
+  };
+  const handleMouseUp = () => {
+    isDown.current = false;
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grab";
+      scrollRef.current.style.scrollBehavior = "smooth";
+    }
+  };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   const cars = [
     { name: "Premium SUV", img: carSuv, seats: 7, trans: "Automatic", fuel: "Diesel", ac: true, tag: "SUV" },
     { name: "Luxury Sedan", img: carSedan, seats: 5, trans: "Automatic", fuel: "Petrol", ac: true, tag: "Sedan" },
@@ -576,14 +620,24 @@ function Fleet() {
             <SectionTitle>Choose your <span className="gold-text">ride</span>.</SectionTitle>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="max-w-md text-[#b8c2cc]">
-              Hand-picked models — sanitised between every trip, mechanically checked
-              and dressed for the drive.
-            </p>
+            <div className="flex flex-col items-start gap-5 md:items-end">
+              <p className="max-w-md text-[#b8c2cc] md:text-right">
+                Hand-picked models — sanitised between every trip, mechanically checked
+                and dressed for the drive.
+              </p>
+            </div>
           </Reveal>
         </div>
 
-        <div className="mt-14 -mx-4 overflow-x-auto scroll-smooth px-4 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          style={{ cursor: "grab" }}
+          className="mt-14 -mx-4 overflow-x-auto scroll-smooth px-4 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x overscroll-x-contain"
+        >
           <div className="flex snap-x snap-mandatory gap-6">
             {cars.map((c, i) => (
               <Reveal key={i} delay={i * 0.05}>
@@ -938,9 +992,11 @@ function Contact() {
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
           <Reveal>
             <ContactCard icon={MapPin} title="Visit Us">
-              48-19-2/2/GF, Vinayaka Temple Road,<br />
-              Nagarjuna Nagar, Sri Ramachandra Nagar,<br />
-              Kanuru, Vijayawada, AP - 520008
+              <a href="https://maps.app.goo.gl/FpaitXiBT1WkVSNq5" target="_blank" rel="noreferrer" className="block text-white transition hover:text-[#d4af37]">
+                48-19-2/2/GF, Vinayaka Temple Road,<br />
+                Nagarjuna Nagar, Sri Ramachandra Nagar,<br />
+                Kanuru, Vijayawada, AP - 520008
+              </a>
             </ContactCard>
           </Reveal>
           <Reveal delay={0.05}>
@@ -963,7 +1019,7 @@ function Contact() {
           <div className="mt-8 overflow-hidden rounded-3xl border border-[#d4af37]/20">
             <iframe
               title="Bezawada Car Rentals location"
-              src="https://www.google.com/maps?q=Kanuru,+Vijayawada,+Andhra+Pradesh+520008&output=embed"
+              src="https://maps.google.com/maps?q=16.515127270678608,80.67800521460903&hl=en&z=17&output=embed"
               className="h-[400px] w-full grayscale contrast-125"
               loading="lazy"
             />
@@ -992,8 +1048,8 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 lg:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15]">
-              <span className="font-display text-lg font-bold text-[#0d1b2a]">B</span>
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15] overflow-hidden">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
             </div>
             <div className="leading-tight">
               <div className="font-display text-base font-semibold">Bezawada</div>
@@ -1019,7 +1075,7 @@ function Footer() {
         <div>
           <div className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">Contact</div>
           <div className="space-y-3 text-sm text-[#b8c2cc]">
-            <div className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#d4af37]" /> Kanuru, Vijayawada</div>
+            <div className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#d4af37]" /> Ramachandranagar, Vijayawada</div>
             <a href={`tel:${PHONE}`} className="flex items-center gap-2 hover:text-white"><Phone className="h-4 w-4 text-[#d4af37]" />{PHONE_DISPLAY}</a>
             <a href="https://wa.me/919393093095" className="flex items-center gap-2 hover:text-white"><MessageCircle className="h-4 w-4 text-[#d4af37]" />WhatsApp</a>
           </div>
