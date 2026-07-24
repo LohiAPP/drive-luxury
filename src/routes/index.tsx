@@ -119,8 +119,8 @@ function Navbar() {
           }`}
         >
           <a href="#home" className="group flex items-center gap-3">
-            <div className="relative grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15] shadow-lg shadow-[#d4af37]/25 overflow-hidden">
-              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
+            <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-white shadow-lg shadow-[#d4af37]/25 overflow-hidden">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-contain p-1" />
               <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/20" />
             </div>
             <div className="leading-tight">
@@ -269,79 +269,95 @@ function Hero() {
       <FloatingParticles />
 
       <motion.div style={{ opacity }} className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pt-32 pb-24 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-6 inline-flex w-fit items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[#d4af37]"
-        >
-          <Sparkles className="h-3.5 w-3.5" />
-          Vijayawada's Premier Rental
-        </motion.div>
-
-        <h1 className="max-w-4xl font-display text-[44px] leading-[1.02] font-bold sm:text-6xl lg:text-[72px]">
-          {headline.map((w, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.3 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="mr-3 inline-block"
+        <div className="flex w-full flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+          <div className="flex-1 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-6 inline-flex w-fit items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[#d4af37]"
             >
-              {w}
-            </motion.span>
-          ))}
-          <motion.span
-            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: 1.0, duration: 0.9 }}
-            className="block gold-text"
+              <Sparkles className="h-3.5 w-3.5" />
+              Vijayawada's Premier Rental
+            </motion.div>
+
+            <h1 className="max-w-4xl font-display text-[44px] leading-[1.02] font-bold sm:text-6xl lg:text-[72px]">
+              {headline.map((w, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ delay: 0.3 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="mr-3 inline-block"
+                >
+                  {w}
+                </motion.span>
+              ))}
+              <motion.span
+                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 1.0, duration: 0.9 }}
+                className="block gold-text"
+              >
+                in Vijayawada
+              </motion.span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.7 }}
+              className="mt-6 max-w-2xl text-base leading-relaxed text-[#b8c2cc] sm:text-lg"
+            >
+              Affordable self drive cars, chauffeur-driven rentals, one-way cabs and
+              airport transfers — backed by 24×7 support and a spotless, verified fleet.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.7 }}
+              className="mt-10 flex flex-wrap items-center gap-4"
+            >
+              <GoldButton href="#contact">Book Now</GoldButton>
+              <GoldButton href={`tel:${PHONE}`} variant="ghost">
+                Call {PHONE_DISPLAY}
+              </GoldButton>
+            </motion.div>
+
+            {/* Floating stats card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              className="mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
+            >
+              {[
+                { k: "Available", v: "Today" },
+                { k: "Cars", v: "100+" },
+                { k: "Support", v: "24×7" },
+                { k: "Booking", v: "Instant" },
+              ].map((s, i) => (
+                <div key={i} className="glass rounded-2xl px-5 py-4">
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-[#d4af37]">{s.k}</div>
+                  <div className="mt-1 font-display text-2xl font-semibold">{s.v}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ delay: 1.2, duration: 0.8, type: "spring" }}
+            className="hidden lg:block lg:w-[320px] xl:w-[400px] shrink-0"
           >
-            in Vijayawada
-          </motion.span>
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.7 }}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-[#b8c2cc] sm:text-lg"
-        >
-          Affordable self drive cars, chauffeur-driven rentals, one-way cabs and
-          airport transfers — backed by 24×7 support and a spotless, verified fleet.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.7 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <GoldButton href="#contact">Book Now</GoldButton>
-          <GoldButton href={`tel:${PHONE}`} variant="ghost">
-            Call {PHONE_DISPLAY}
-          </GoldButton>
-        </motion.div>
-
-        {/* Floating stats card */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-          className="mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
-        >
-          {[
-            { k: "Available", v: "Today" },
-            { k: "Cars", v: "100+" },
-            { k: "Support", v: "24×7" },
-            { k: "Booking", v: "Instant" },
-          ].map((s, i) => (
-            <div key={i} className="glass rounded-2xl px-5 py-4">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-[#d4af37]">{s.k}</div>
-              <div className="mt-1 font-display text-2xl font-semibold">{s.v}</div>
+            <div className="relative aspect-square w-full rounded-[40px] bg-white p-6 shadow-[0_0_60px_rgba(212,175,55,0.15)] ring-1 ring-white/20">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-contain" />
+              <div className="absolute -inset-4 -z-10 rounded-[48px] bg-gradient-to-tr from-[#d4af37]/20 to-transparent opacity-50 blur-2xl" />
             </div>
-          ))}
-        </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Scroll indicator */}
@@ -1048,8 +1064,8 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 lg:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#d4af37] to-[#8a6c15] overflow-hidden">
-              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
+            <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-white shadow-lg shadow-[#d4af37]/10 overflow-hidden">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-contain p-1" />
             </div>
             <div className="leading-tight">
               <div className="font-display text-base font-semibold">Bezawada</div>
