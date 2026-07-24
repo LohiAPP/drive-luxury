@@ -5,7 +5,7 @@ import {
   Car, Users, Fuel, Snowflake, Cog, Phone, MapPin, Clock, Shield,
   Sparkles, BadgeCheck, MousePointer2, Star, ChevronDown, ChevronLeft, ChevronRight, ArrowRight,
   Plane, Route as RouteIcon, Briefcase, Mountain,
-  MessageCircle, Menu, X, CheckCircle2, Gauge, HandCoins, Timer, Navigation,
+  MessageCircle, Menu, X, CheckCircle2, Gauge, HandCoins, Timer, Navigation, Facebook, Instagram,
 } from "lucide-react";
 
 import heroCar from "@/assets/hero-car.jpg";
@@ -1093,7 +1093,15 @@ function Footer() {
           <div className="space-y-3 text-sm text-[#b8c2cc]">
             <div className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#d4af37]" /> Ramachandranagar, Vijayawada</div>
             <a href={`tel:${PHONE}`} className="flex items-center gap-2 hover:text-white"><Phone className="h-4 w-4 text-[#d4af37]" />{PHONE_DISPLAY}</a>
-            <a href="https://wa.me/919393093095" className="flex items-center gap-2 hover:text-white"><MessageCircle className="h-4 w-4 text-[#d4af37]" />WhatsApp</a>
+            <a href="https://wa.me/919393093095" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white"><MessageCircle className="h-4 w-4 text-[#d4af37]" />WhatsApp</a>
+            <div className="mt-6 flex gap-4 pt-2">
+              <a href="https://www.facebook.com/share/1LRzLg82L8/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="text-[#b8c2cc] transition-colors hover:text-[#d4af37]">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="https://www.instagram.com/bezawada_carrentals?igsh=MWJkaWVkNHNoeHl3ZQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="text-[#b8c2cc] transition-colors hover:text-[#d4af37]">
+                <Instagram className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
